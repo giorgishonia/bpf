@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="User Feedback Collection Platform">
+    <title>Community Feedback</title>
+        
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/feedback.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicon (recommended to add) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <header>
+        <h3 style="font-size: 15px;">Community Feedback</h1>
+            <div class="header-controls">
+                <div class="theme-toggle">
+                    <div class="switch">
+                        <input type="checkbox" class="switch__input" id="themeSwitch">
+                        <label class="switch__label" for="themeSwitch">
+                            <span class="switch__indicator"></span>
+                            <span class="switch__decoration"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="auth-section">
+                    <button id="discord-login" class="btn btn-primary" style="width: 100%;">
+                        <i class="fab fa-discord"></i> Login with Discord
+                    </button>
+                    <div id="user-info" style="display: none;">
+                        <img id="profile-pic" class="avatar" src="/placeholder.svg" alt="Profile Picture">
+                        <span style="display: none;" id="user-name"></span>
+                        <button id="logout" class="btn btn-secondary" style="width: 100%;">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="reviews-section">
+            <div class="reviews-header">
+                <button id="add-review-btn" class="btn btn-primary">Add Review</button>
+            </div>
+            <div id="reviews-container" class="reviews-container grid">
+                <!-- Reviews will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Restriction Modal -->
+<div style="display: none;" id="review-restriction-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>You Can Only Submit One Review</h2>
+        <p>You have already submitted a review. Thank you!</p>
+    </div>
+</div>
+
+
+    <!-- Review Modal -->
+    <div id="review-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Write a Review</h2>
+            <form id="review-form">
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                </div>
+                <div class="form-group">
+                    <label for="review-text">Review (Optional)</label>
+                    <textarea id="review-text" rows="4" placeholder="Share your thoughts about the product..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Authentication Required</h2>
+            <p>You need to be logged in to submit a review.</p>
+            <button id="auth-discord-login" class="btn btn-primary">
+                <i class="fab fa-discord"></i> Login with Discord
+            </button>
+        </div>
+    </div>
+
+    <!-- External Scripts -->
+    <script 
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" 
+        integrity="sha384-..." 
+        crossorigin="anonymous"
+    ></script>
+    
+    <!-- Local Module Script -->
+    <script 
+        type="module" 
+        src="/feedback.js" 
+        defer
+    ></script>
+</body>
+</html>

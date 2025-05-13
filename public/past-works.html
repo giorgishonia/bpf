@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Works</title>
+    <link rel="stylesheet" href="/pastworks.css">
+
+</head>
+<body>
+    
+    <div class="switch">
+        <input type="checkbox" class="switch__input" id="themeSwitch">
+        <label class="switch__label" for="themeSwitch">
+          <span class="switch__indicator"></span>
+          <span class="switch__decoration"></span>
+        </label>
+      </div>
+    
+    <div class="stats-container">
+        <h1>Past Works</h1>
+        <div class="stats">
+            <div>Total Projects: <span id="totalProjects">0</span></div>
+            <div>Total Votes: <span id="totalVotes">0</span></div>
+            <div>Total Visits: <span id="totalVisits">0</span></div>
+        </div>
+    </div>
+
+    <div class="carousel-container">
+        <div class="carousel" id="gameCarousel">
+            <!-- Game cards will be populated by JavaScript -->
+        </div>
+    </div>
+    <div class="youtube-section">
+        <div class="youtube-grid">
+          <div class="project-item">
+            <div class="video-wrapper">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/N0mzfv3J1HM?si=PPX6hF8n4pL7zh9E" title="Render Distance" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p class="video-description">Render Distance script</p>
+          </div>
+          <div class="project-item">
+            <div class="video-wrapper">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/I8umOm0tLgc?si=f2UnI90ispSa3kr5&start=4" title="Boxing RNG System" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p class="video-description">Boxing RNG system, with inventory, NPC hiring and upgrading</p>
+          </div>
+          <div class="project-item">
+            <div class="video-wrapper">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/jXDylWP0bJ8?si=rovtnY0zdLZVAbk4" title="Restocking System" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p class="video-description">Restocking System</p>
+          </div>
+          <div class="project-item">
+            <div class="video-wrapper">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/4QiP0UK-Saw?si=Cji0mxRsYRyegc66" title="Placement System" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p class="video-description">Placement system with removal of the placed objects</p>
+          </div>
+          <div class="project-item">
+            <div class="video-wrapper">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/oHQgNq_F4eQ?si=WgNCYC1633j3mJAg" title="AI NPC System" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p class="video-description">Simple AI driven NPC, which talks to you. Can be adjusted to literally any character</p>
+          </div>
+        </div>
+      </div>
+      <script type="module" src="/pastworks.js"></script>
+
+</body>
+</html>
