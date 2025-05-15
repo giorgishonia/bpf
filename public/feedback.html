@@ -9,15 +9,33 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/feedback.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Favicon (recommended to add) -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
-<body class="dark-mode">
-    <div class="container">
-        <header>
-        <h3 style="font-size: 15px;">Community Feedback</h1>
-            <div class="header-controls">
+<body class="dark">
+    <!-- Main Navigation -->
+    <nav>
+        <h3 class="logo">Begi.dev</h3>
+        <div class="profile-container">
+            <img id="profile-pic" class="profile-pic" src="" alt="Profile" style="display: none;">
+        </div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/past-works.html">Projects</a></li>
+            <li><a href="/feedback.html">Feedback</a></li>
+            <li><a href="/#store" class="store-link"><span class="store-text">Store</span><span class="coming-soon-text">Coming Soon</span></a></li>
+            <li><a href="/tos.html">ToS</a></li>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mobile-menu">
+                    <path d="M4 6l16 0"></path>
+                    <path d="M4 12l16 0"></path>
+                    <path d="M4 18l16 0"></path>
+                </svg>
+            </li>
+            <li>    
                 <div class="theme-toggle">
                     <div class="switch">
                         <input type="checkbox" class="switch__input" id="themeSwitch">
@@ -27,6 +45,31 @@
                         </label>
                     </div>
                 </div>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Mobile Navigation -->
+    <div id="mobileNav" class="mobile-nav closed-menu">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-x">
+                <path d="M18 6l-12 12"></path>
+                <path d="M6 6l12 12"></path>
+            </svg>
+        </span>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/past-works.html">Projects</a></li>
+            <li><a href="/feedback.html">Feedback</a></li>
+            <li><a href="/#store">Store</a></li>
+            <li><a href="/tos.html">ToS</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <header>
+        <h3 style="font-size: 15px;">Community Feedback</h1>
+            <div class="header-controls">
                 <div class="auth-section">
                     <button id="discord-login" class="btn btn-primary" style="width: 100%;">
                         <i class="fab fa-discord"></i> Login with Discord

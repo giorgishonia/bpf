@@ -163,13 +163,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Store the interval ID globally
 let lanyardIntervalId = null;
+let lastLanyardUpdate = 0;
+const LANYARD_UPDATE_INTERVAL = 60000; // 60 seconds between updates
 
-// Function to update Lanyard image
+// Function to update Lanyard image with proper rate limiting
 function updateLanyardImage(isDark) {
+    const now = Date.now();
+    // Only update if sufficient time has passed since last update
+    if (now - lastLanyardUpdate < LANYARD_UPDATE_INTERVAL) return;
+    
+    lastLanyardUpdate = now;
     const img = document.getElementById("lanyard");
     if (img) {
         const theme = isDark ? 'dark' : 'light';
-        img.src = `https://lanyard.cnrad.dev/api/859866420887289877?bg=transparent&idleMessage=Silently%20defying%20productivity...&theme=${theme}&showDisplayName=true&animatedDecoration=true&hideDecoration=true&hideTimestamp=false&t=${Date.now()}`;
+        img.src = `https://lanyard.cnrad.dev/api/859866420887289877?bg=transparent&idleMessage=Silently%20defying%20productivity...&theme=${theme}&showDisplayName=true&animatedDecoration=true&hideDecoration=true&hideTimestamp=false&t=${now}`;
     }
 }
 
@@ -186,11 +193,11 @@ document.getElementById('themeSwitch')?.addEventListener('change', function() {
         clearInterval(lanyardIntervalId);
     }
     
-    // Update immediately
+    // Update immediately, but respect rate limiting
     updateLanyardImage(isDark);
     
-    // Set new interval
-    lanyardIntervalId = setInterval(() => updateLanyardImage(isDark), 500);
+    // Set new interval with much lower frequency
+    lanyardIntervalId = setInterval(() => updateLanyardImage(isDark), LANYARD_UPDATE_INTERVAL);
 });
 
 // Initialize theme based on saved preference
@@ -207,12 +214,14 @@ function initTheme() {
         if (themeSwitch) themeSwitch.checked = true; // Light mode = switch ON
     }
     
-    // Initialize Lanyard image
+    // Initialize Lanyard image with rate limiting
     updateLanyardImage(isDark);
+    
+    // Clear any existing interval and set a new one with proper rate limiting
     if (lanyardIntervalId) {
         clearInterval(lanyardIntervalId);
     }
-    lanyardIntervalId = setInterval(() => updateLanyardImage(isDark), 1000);
+    lanyardIntervalId = setInterval(() => updateLanyardImage(isDark), LANYARD_UPDATE_INTERVAL);
 }
 
 initTheme();

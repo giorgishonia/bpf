@@ -342,10 +342,21 @@
 
                    <div style="display: flex; justify-content: center; width: 100%;" class="discord-widgets-wrapper">
                     <a href="https://discord.com/users/859866420887289877" style="display: flex; justify-content: center;">
-                      <img style="height: fit-content;" id="lanyard" 
+                      <div id="discord-card-container" style="position: relative; height: fit-content; min-height: 120px; min-width: 300px; display: flex; justify-content: center; align-items: center;">
+                        <!-- Fallback content while loading -->
+                        <div id="discord-card-fallback" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 10px; background: rgba(88, 101, 242, 0.1); display: flex; justify-content: center; align-items: center; z-index: 1;">
+                          <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                            <img src="./public/images/discord-placeholder.svg" alt="Discord" style="width: 40px; height: 40px; opacity: 0.7;">
+                            <span>Loading Discord profile...</span>
+                          </div>
+                        </div>
+                        <!-- Actual Lanyard card with retry mechanism -->
+                        <img style="height: fit-content; z-index: 2;" id="lanyard" 
                            src="https://lanyard.cnrad.dev/api/859866420887289877?bg=transparent&idleMessage=Silently%20defying%20productivity...&theme=light&showDisplayName=true&animatedDecoration=true&hideDecoration=true&hideTimestamp=false" 
                            style="max-width: 100%; height: auto; border-radius: 10px;" 
-                      />
+                           onerror="handleLanyardError()"
+                        />
+                      </div>
                   </a>
                   <div class="custom-discord-widget">
                     <div class="server-info">
@@ -407,4 +418,102 @@
     </div>
     <script type="module" src="./src/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    
+    <!-- Discord Lanyard handling script -->
+    <script>
+      // Variables for Lanyard handling
+      let lanyardRetryCount = 0;
+      const MAX_RETRIES = 3;
+      const RETRY_DELAYS = [3000, 6000, 12000]; // Exponential backoff
+      let lanyardCacheKey = null;
+      
+      // Handle Lanyard API errors with improved retry logic
+      function handleLanyardError() {
+        const lanyardImg = document.getElementById('lanyard');
+        const fallback = document.getElementById('discord-card-fallback');
+        
+        if (lanyardRetryCount < MAX_RETRIES) {
+          console.log(`Retrying Lanyard API (attempt ${lanyardRetryCount + 1}/${MAX_RETRIES})...`);
+          
+          // Update fallback message
+          fallback.querySelector('span').textContent = `Retrying... (${lanyardRetryCount + 1}/${MAX_RETRIES})`;
+          
+          // Use exponential backoff for retries to avoid rate limiting
+          const retryDelay = RETRY_DELAYS[lanyardRetryCount] || 15000;
+          
+          // Add cache busting parameter and retry after delay
+          setTimeout(() => {
+            // Only retry if image is still in error state
+            if (!lanyardImg.complete || lanyardImg.naturalHeight === 0) {
+              // Use cache key for better control
+              const cacheKey = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+              lanyardCacheKey = cacheKey;
+              lanyardImg.src = `https://lanyard.cnrad.dev/api/859866420887289877?bg=transparent&idleMessage=Silently%20defying%20productivity...&theme=light&showDisplayName=true&animatedDecoration=true&hideDecoration=true&hideTimestamp=false&cacheBust=${cacheKey}`;
+              lanyardRetryCount++;
+            }
+          }, retryDelay);
+        } else {
+          console.error("Failed to load Discord profile after multiple attempts");
+          
+          // Show permanent fallback with styled card
+          fallback.innerHTML = `
+            <div style="padding: 20px; text-align: center;">
+              <img src="./public/images/discord-placeholder.svg" alt="Discord" style="width: 50px; height: 50px; margin-bottom: 10px;">
+              <h3 style="margin: 0 0 5px; font-size: 16px;">Begi#0001</h3>
+              <p style="margin: 0; color: #7289da; font-size: 14px;">Discord Profile</p>
+              <p style="margin: 10px 0 0; font-size: 12px; opacity: 0.7;">Click to view profile</p>
+            </div>
+          `;
+          
+          // Keep fallback visible
+          fallback.style.zIndex = "10";
+        }
+      }
+      
+      // When Lanyard loads successfully, hide the fallback
+      document.getElementById('lanyard').onload = function() {
+        if (this.complete && this.naturalHeight !== 0) {
+          document.getElementById('discord-card-fallback').style.opacity = "0";
+          setTimeout(() => {
+            document.getElementById('discord-card-fallback').style.display = "none";
+          }, 300);
+          
+          // Reset retry count on success
+          lanyardRetryCount = 0;
+          
+          // Store successful cache key
+          localStorage.setItem('lastSuccessfulLanyardLoad', Date.now().toString());
+        }
+      };
+      
+      // More efficient handling of initial load
+      window.addEventListener('DOMContentLoaded', () => {
+        const lanyardImg = document.getElementById('lanyard');
+        
+        // Only attempt to load if we haven't had a successful load in the last hour
+        const lastSuccessfulLoad = parseInt(localStorage.getItem('lastSuccessfulLanyardLoad') || '0');
+        const ONE_HOUR = 3600000;
+        
+        if (Date.now() - lastSuccessfulLoad > ONE_HOUR) {
+          // Add theme parameter based on current theme
+          const isDark = document.body.classList.contains('dark');
+          const theme = isDark ? 'dark' : 'light';
+          
+          // Generate a unique cache key
+          const cacheKey = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+          lanyardCacheKey = cacheKey;
+          
+          // Set the src with the cache key
+          lanyardImg.src = `https://lanyard.cnrad.dev/api/859866420887289877?bg=transparent&idleMessage=Silently%20defying%20productivity...&theme=${theme}&showDisplayName=true&animatedDecoration=true&hideDecoration=true&hideTimestamp=false&cacheBust=${cacheKey}`;
+        }
+        
+        // Check if image is already loaded from cache
+        if (lanyardImg.complete && lanyardImg.naturalHeight !== 0) {
+          document.getElementById('discord-card-fallback').style.opacity = "0";
+          setTimeout(() => {
+            document.getElementById('discord-card-fallback').style.display = "none";
+          }, 300);
+        }
+      });
+    </script>
 </body></html>

@@ -1,2 +1,2 @@
-Prompt:
-"Refine the 'Past Works' section by displaying categories and showing six random past works. Add a 'Store' button to the navigation and main page, with three blurred image cards. In the navigation, it should say 'Coming Soon' when small, and clicking should navigate to the relevant category. Move social links to the contact section, replacing them with a 'Contact Me' button that scrolls to the appropriate paragraph. Improve the tech stack hover effect to reveal extra information and include additional technologies: Arduino, Counter Strike Sharp, TensorFlow, Python, C#, C++, Unity, Unreal, Roblox Studio, JavaScript, TypeScript, Luau, Discord API, Java, Electron, Three.js, Node.js, Selenium, Tkinter (with a caterpillar icon), Flask, Turtle.py, Pygame, Cheat Engine, x64dbg, Ghidra, SQL, HTML, CSS, and OpenGL."
+The navbar that appears on the main page should also be visible and consistent across all other pages, including the Terms of Service (TOS) page.
+

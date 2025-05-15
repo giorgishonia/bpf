@@ -10,14 +10,408 @@
     <title>Terms of Service</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-   /* General body styling with dark theme */
+   /* Variables for light/dark theme */
+:root {
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --card-bg: #ffffff;
+    --header-bg: #ffffff;
+    --link-color: #7c4dff;
+    --border-color: #ddd;
+    --content-bg: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --accent-color: #5865F2;
+    --section-number-bg: rgba(88, 101, 242, 0.1);
+    --section-number-text: #5865F2;
+    --point-number-bg: rgba(88, 101, 242, 0.06);
+    --point-number-text: #5865F2;
+}
+
+/* Dark theme variables */
+.dark-mode, .dark {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --header-bg: #1a1a1a;
+    --link-color: #bb86fc;
+    --border-color: #333;
+    --content-bg: #1e1e1e;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --section-number-bg: rgba(88, 101, 242, 0.15);
+    --section-number-text: #7d88f3;
+    --point-number-bg: rgba(88, 101, 242, 0.1);
+    --point-number-text: #7d88f3;
+}
+
+/* Main navigation styles */
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 80px;
+    width: 100%;
+    padding: 25px 40px 25px 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    background-color: var(--bg-color);
+    box-shadow: 0 0 10px var(--shadow-color);
+    transition: background-color 0.3s ease;
+}
+
+nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0;
+}
+
+nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.23s;
+}
+
+nav ul li a:hover {
+    color: #5865F2;
+}
+
+.logo {
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 0;
+}
+
+.mobile-menu {
+    display: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 2.3rem;
+}
+
+.mobile-menu svg {
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.mobile-menu:hover {
+    color: #147efb;
+    transition: all .3s;
+}
+
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-color);
+    z-index: 300;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.mobile-nav span {
+    position: absolute;
+    top: 2rem;
+    right: 4rem;
+    font-size: 3.3rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.mobile-nav span svg {
+    color: var(--text-color);
+    stroke: currentColor;
+    transition: all 0.2s ease;
+}
+
+.mobile-nav span svg:hover {
+    transform: rotate(90deg);
+    color: #147efb;
+}
+
+.mobile-nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    list-style: none;
+    font-size: 2.3rem;
+}
+
+.mobile-nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.5rem;
+    transition: all 0.23s;
+}
+
+.mobile-nav ul li a:hover {
+    color: #5865F2;
+}
+
+.closed-menu {
+    left: -100% !important;
+}
+
+.open-menu {
+    left: 0 !important;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.store-link {
+    position: relative;
+}
+
+.store-text {
+    position: relative;
+}
+
+.coming-soon-text {
+    position: absolute;
+    top: -10px;
+    right: -40px;
+    background-color: #5865F2;
+    color: white;
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+/* Theme switch styles */
+.switch {
+    display: inline-block;
+    position: relative;
+}
+
+.switch__input {
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+}
+
+.switch__label {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    background-color: #2B2B2B;
+    border: 2.5px solid #5B5B5B;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(.46,.03,.52,.96);
+}
+
+.switch__indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateX(-72%);
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #7B7B7B;
+    border-radius: 9999px;
+    box-shadow: 5px 0px 0 0 rgba(0, 0, 0, 0.2) inset;
+}
+
+.switch__indicator::before,
+.switch__indicator::after {
+    position: absolute;
+    content: '';
+    display: block;
+    background-color: #FFFFFF;
+    border-radius: 9999px;
+}
+
+.switch__indicator::before {
+    top: 3.5px;
+    left: 3.5px;
+    width: 4.5px;
+    height: 4.5px;
+    background-color: #FFFFFF;
+    opacity: 0.6;
+}
+
+.switch__indicator::after {
+    bottom: 4px;
+    right: 3px;
+    width: 7px;
+    height: 7px;
+    background-color: #FFFFFF;
+    opacity: 0.8;
+}
+
+.switch__decoration {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    display: block;
+    width: 2.5px;
+    height: 2.5px;
+    background-color: #FFFFFF;
+    border-radius: 9999px;
+    animation: twinkle 0.8s infinite -0.6s;
+}
+
+.switch__decoration::before,
+.switch__decoration::after {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 2.5px;
+    height: 2.5px;
+    background-color: #FFFFFF;
+    border-radius: 9999px;
+}
+
+.switch__decoration::before {
+    top: -10px;
+    left: 5px;
+    opacity: 1;
+    animation: twinkle 0.6s infinite;
+}
+
+.switch__decoration::after {
+    top: -3.5px;
+    left: 15px;
+    animation: twinkle 0.6s infinite -0.2s;
+}
+
+@keyframes twinkle {
+    50% { opacity: 0.2; }
+}
+
+.switch__input:checked + .switch__label {
+    background-color: #8FB5F5;
+    border-color: #347CF8;
+}
+
+.switch__input:checked + .switch__label .switch__indicator {
+    background-color: #ECD21F;
+    box-shadow: none;
+    transform: translate(-50%, -50%) translateX(72%);
+}
+
+.switch__input:checked + .switch__label .switch__indicator::before,
+.switch__input:checked + .switch__label .switch__indicator::after {
+    display: none;
+}
+
+.switch__input:checked + .switch__label .switch__decoration {
+    top: 50%;
+    transform: translate(0%, -50%);
+    animation: cloud 8s linear infinite;
+    width: 10px;
+    height: 10px;
+}
+
+.switch__input:checked + .switch__label .switch__decoration::before {
+    width: 5px;
+    height: 5px;
+    top: auto;
+    bottom: 0;
+    left: -4px;
+    animation: none;
+}
+
+.switch__input:checked + .switch__label .switch__decoration::after {
+    width: 7.5px;
+    height: 7.5px;
+    top: auto;
+    bottom: 0;
+    left: 8px;
+    animation: none;
+}
+
+.switch__input:checked + .switch__label .switch__decoration,
+.switch__input:checked + .switch__label .switch__decoration::before,
+.switch__input:checked + .switch__label .switch__decoration::after {
+    border-radius: 9999px 9999px 0 0;
+}
+
+.switch__input:checked + .switch__label .switch__decoration::after {
+    border-bottom-right-radius: 9999px;
+}
+
+@keyframes cloud {
+    0% {
+        transform: translate(0%, -50%);
+    }
+    50% {
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        transform: translate(0%, -50%);
+    }
+}
+
+/* Responsive styles for the navbar */
+@media (max-width: 1000px) {
+    nav {
+        padding: 25px 20px;
+    }
+    
+    nav ul li:not(:nth-last-child(1), :nth-last-child(2)) {
+        display: none;
+    }
+    
+    .mobile-menu {
+        display: block;
+    }
+}
+
+@media (max-width: 400px) {
+    nav {
+        padding: 25px 30px;
+    }
+}
+
+/* General body styling with dark theme */
 body {
-    background-color: #121212;
-    color: #e0e0e0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Container styling for centering content */
@@ -25,6 +419,7 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    padding-top: 100px; /* Space for fixed navbar */
 }
 
 /* Header styling with animation */
@@ -38,27 +433,90 @@ header h1 {
 /* Main content styling */
 .tos-content h2 {
     font-size: 1.5em;
-    margin-top: 30px;
-    border-bottom: 1px solid #333;
+    margin-top: 40px;
+    margin-bottom: 20px;
     padding-bottom: 10px;
+    display: flex;
+    align-items: center;
     animation: fadeIn 0.5s ease-in;
+    position: relative;
+}
+
+.tos-content h2::before {
+    content: attr(data-number);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--section-number-bg), rgba(88, 101, 242, 0.2));
+    color: var(--section-number-text);
+    border-radius: 10px;
+    margin-right: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 3px 8px rgba(88, 101, 242, 0.15);
+    transition: all 0.3s ease;
+}
+
+.tos-content h2:hover::before {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(88, 101, 242, 0.25);
+}
+
+.tos-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 55px;
+    right: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-color) 0%, transparent 100%);
 }
 
 .tos-content p {
-    line-height: 1.6;
+    line-height: 1.7;
     margin-bottom: 15px;
     animation: fadeIn 0.5s ease-in;
+    padding-left: 20px;
+    position: relative;
 }
 
-/* Acceptance section styling (assuming it’s part of the content) */
+.tos-content p strong {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 22px;
+    background: linear-gradient(135deg, var(--point-number-bg), rgba(88, 101, 242, 0.15));
+    color: var(--point-number-text);
+    border-radius: 6px;
+    margin-right: 10px;
+    font-size: 0.85em;
+    font-weight: 600;
+    padding: 0 8px;
+    box-shadow: 0 2px 5px rgba(88, 101, 242, 0.1);
+    transition: all 0.2s ease;
+}
+
+.tos-content p:hover strong {
+    transform: translateX(2px);
+    box-shadow: 0 3px 7px rgba(88, 101, 242, 0.2);
+}
+
+/* Acceptance section styling (assuming it's part of the content) */
 .tos-acceptance {
-    margin-top: 30px;
+    margin-top: 40px;
     animation: fadeIn 0.5s ease-in;
+    padding: 20px;
+    background-color: var(--section-number-bg);
+    border-radius: 8px;
 }
 
 .tos-acceptance p {
     line-height: 1.6;
-    margin-bottom: 15px;
+    margin-bottom: 0;
     animation: fadeIn 0.5s ease-in;
 }
 
@@ -67,15 +525,16 @@ header h1 {
     text-align: center;
     margin-top: 40px;
     font-size: 0.8em;
-    color: #888;
+    color: var(--date-color, #888);
     animation: fadeIn 1s ease-in;
     padding-bottom: 20px;
 }
 
 /* Link styling for dark theme */
 a {
-    color: #bb86fc;
+    color: var(--link-color);
     text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 a:hover {
@@ -98,6 +557,7 @@ a:hover {
 @media (max-width: 600px) {
     .container {
         padding: 10px;
+        padding-top: 90px;
     }
     header h1 {
         font-size: 2em;
@@ -105,16 +565,79 @@ a:hover {
     .tos-content h2 {
         font-size: 1.2em;
     }
+    .tos-content h2::before {
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+        border-radius: 8px;
+    }
+    .tos-content h2::after {
+        left: 42px;
+    }
     .tos-content p, .tos-acceptance p {
-        font-size: 0.9em;
+        font-size: 0.95em;
+        padding-left: 10px;
     }
     .license {
         font-size: 0.75em;
     }
+    .tos-content p strong {
+        min-width: 30px;
+        height: 18px;
+        font-size: 0.8em;
+        border-radius: 5px;
+    }
 }
     </style>
 </head>
-<body>
+<body class="dark">
+    <!-- Main Navigation -->
+    <nav>
+        <h3 class="logo">Begi.dev</h3>
+        <div class="profile-container">
+            <img id="profile-pic" class="profile-pic" src="" alt="Profile" style="display: none;">
+        </div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/past-works.html">Projects</a></li>
+            <li><a href="/feedback.html">Feedback</a></li>
+            <li><a href="/#store" class="store-link"><span class="store-text">Store</span><span class="coming-soon-text">Coming Soon</span></a></li>
+            <li><a href="/tos.html">ToS</a></li>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mobile-menu">
+                    <path d="M4 6l16 0"></path>
+                    <path d="M4 12l16 0"></path>
+                    <path d="M4 18l16 0"></path>
+                </svg>
+            </li>
+            <li>    
+                <div class="switch">
+                    <input type="checkbox" class="switch__input" id="themeSwitch">
+                    <label class="switch__label" for="themeSwitch">
+                        <span class="switch__indicator"></span>
+                        <span class="switch__decoration"></span>
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Mobile Navigation -->
+    <div id="mobileNav" class="mobile-nav closed-menu">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-x">
+                <path d="M18 6l-12 12"></path>
+                <path d="M6 6l12 12"></path>
+            </svg>
+        </span>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/past-works.html">Projects</a></li>
+            <li><a href="/feedback.html">Feedback</a></li>
+            <li><a href="/#store">Store</a></li>
+            <li><a href="/tos.html">ToS</a></li>
+        </ul>
+    </div>
 
     <div class="container">
         <header>
@@ -122,12 +645,12 @@ a:hover {
         </header>
 
         <main class="tos-content">
-            <h2>1. Agreement to Terms</h2>
+            <h2 data-number="1">Agreement to Terms</h2>
             <p><strong>1.1</strong> By starting a commission with me, you agree to these terms. Please read everything before we begin to make sure we're on the same page.</p>
             <p><strong>1.2</strong> If these terms are not followed, I might need to cancel the project, and no refunds will be issued.</p>
             <p><strong>1.3</strong> By moving forward with a project, you confirm that you've accepted these terms. If you have any concerns, let's discuss them before starting the work.</p>
 
-            <h2>2. Payment</h2>
+            <h2 data-number="2">Payment</h2>
             <p><strong>2.1</strong> Payments can be made via PayPal or Robux. PayPal payments come with a 10% processing fee, and Robux payments should account for platform fees to ensure I   receive the full amount.</p>
             <p><strong>2.2</strong> For projects valued below $50 USD (or R$20,000), full payment is required upfront. For projects valued at $50 USD or more (or R$20,000 and above), a 50% deposit is required upfront. The remaining 50% is due within 12 hours of project completion. If the balance is not paid within this timeframe, a 10% late fee will be added to the total. If payment is still not received after 24 hours, the matter will be reported to relevant third parties.</p>
             <p><strong>2.3</strong> Refunds aren't offered unless there's a clear issue from my side. I will do my best to resolve any problems fairly if they arise.</p>
@@ -135,17 +658,17 @@ a:hover {
             <p><strong>2.5</strong> PayPal payments must be sent using the 'Friends and Family' option. If payment is sent incorrectly, you have 24 hours to request a refund. After this time,     payments are final.</p>
             <p><strong>2.6</strong> I don't accept revenue-sharing deals unless the game has more than 200 concurrent players and the percentage offered is 5% or higher.</p>
 
-            <h2>3. Revisions</h2>
+            <h2 data-number="3">Revisions</h2>
             <p><strong>3.1</strong> Minor changes are included, but if major revisions are needed, we can discuss additional charges. It's best to finalize details upfront to avoid extra  costs later.</p>
             <p><strong>3.2</strong> I'll fix any bugs for free within 48 hours after the delivery. After that, any fixes will come with additional charges.</p>
 
-            <h2>4. Confidentiality</h2>
+            <h2 data-number="4">Confidentiality</h2>
             <p><strong>4.1</strong> I have full permission to showcase the work I've done for you in my portfolio, on my website, and on social media. I will not share source code or sensitive information.</p>
             <p><strong>4.2</strong> If you write a review, your username, profile picture, and the project's price will be displayed on my portfolio website. By submitting a review, you agree that I can display this information.</p>
             <p><strong>4.3</strong> Any private information shared with me will stay confidential. Your data and ideas are safe with me.</p>
             <p><strong>4.4</strong> I do not sign NDAs or other agreements of that nature.</p>
 
-            <h2>5. Termination</h2>
+            <h2 data-number="5">Termination</h2>
             <p><strong>5.1</strong> If you cancel a commission, I will keep the 50% upfront payment, and you will be reported to the third parties.</p>
             <p><strong>5.2</strong> If I cancel the project, I will offer a full refund. You are not allowed to report, use any third-party methods or take further action against me after claiming a refund.</p>
         </main>
@@ -154,10 +677,71 @@ a:hover {
             <p>By continuing to use my services, you accept that you have read through and agree to the terms in this document. If you have any doubts or queries, please do let me know so I can clear your confusion.</p>
         </div>
 
+        <div class="license">
+            <p>&copy; 2025 Begi. All rights reserved. Licensed under the <a href="https://mit-license.org">MIT License</a>.</p>
+        </div>
     </div>
 
-<div class="license">
-    <p>&copy; 2025 Begi. All rights reserved. Licensed under the <a href="https://mit-license.org">MIT License</a>.</p>
-</div>
+    <!-- JavaScript for mobile menu and theme toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu');
+            const mobileNav = document.getElementById('mobileNav');
+            const mobileCloseBtn = document.querySelector('#mobileNav span');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileNav.classList.remove('closed-menu');
+                    mobileNav.classList.add('open-menu');
+                });
+            }
+            
+            if (mobileCloseBtn) {
+                mobileCloseBtn.addEventListener('click', () => {
+                    mobileNav.classList.remove('open-menu');
+                    mobileNav.classList.add('closed-menu');
+                });
+            }
+            
+            // Theme toggle
+            const themeSwitch = document.getElementById('themeSwitch');
+            themeSwitch.addEventListener('change', toggleTheme);
+            
+            // Initialize theme
+            initTheme();
+        });
+        
+        function toggleTheme() {
+            const themeSwitch = document.getElementById('themeSwitch');
+            if (themeSwitch.checked) {
+                // If the switch is ON (which means it's light mode)
+                document.body.classList.remove('dark-mode');
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                // If the switch is OFF (which means it's dark mode)
+                document.body.classList.add('dark-mode');
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        function initTheme() {
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            const themeSwitch = document.getElementById('themeSwitch');
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode'); // Apply dark mode to body
+                document.body.classList.add('dark'); // Also add 'dark' class for main site compatibility
+                themeSwitch.checked = false;  // Switch should be OFF if dark mode is applied
+            } else {
+                document.body.classList.remove('dark-mode'); // Remove dark mode
+                document.body.classList.remove('dark'); // Also remove 'dark' class
+                themeSwitch.checked = true;  // Switch should be ON if light mode is applied
+            }
+        }
+    </script>
 </body>
 </html>
