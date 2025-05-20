@@ -1878,3 +1878,7 @@ body.dark .join-button:hover{
   font-size: 0.9rem !important;
   padding: 2px 5px !important;
 }
+
+#contact{
+  padding: 19rem 0;
+}
