@@ -1,8 +1,8 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import { ScrollTrigger } from 'https://cdn.jsdelivr.net/npm/gsap@3.11.5/ScrollTrigger.min.js';
 
-const supabaseUrl = 'https://ociyjiapqvjcdtvpqrhb.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jaXlqaWFwcXZqY2R0dnBxcmhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDExMDU2OTksImV4cCI6MjA1NjY4MTY5OX0.VT-bUTQoIDit2YV0dpKuA99gqleO0b9pZmGyBF5hDfM';
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Register the ScrollTrigger plugin
