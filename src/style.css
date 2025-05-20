@@ -1182,21 +1182,6 @@ body.dark .store {
   display: inline-block;
 }
 
-.coming-soon-text {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #147efb;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 1.2rem;
-  white-space: nowrap;
-  z-index: 10;
-}
-
 .store-link:hover .coming-soon-text {
   display: block;
 }
@@ -1882,4 +1867,14 @@ body.dark .join-button:hover{
 
 .logo{
   font-size: 2.5rem !important;
+}
+
+.coming-soon-text {
+  position: absolute !important;
+  top: -13px !important;
+  right: -16px !important; 
+  background-color: #5865F2 !important;
+  color: white !important;
+  font-size: 0.9rem !important;
+  padding: 2px 5px !important;
 }
