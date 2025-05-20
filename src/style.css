@@ -1879,6 +1879,29 @@ body.dark .join-button:hover{
   padding: 2px 5px !important;
 }
 
-#contact{
-  padding: 19rem 0;
+  @media screen and (min-width: 768px) {
+    #contact{
+      padding: 19rem 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+  #feedback, #projects{
+    margin-top: 100px !important;
+    padding-top: 0 !important;
+  }
+  #about{
+    margin-top: 40px !important;
+    padding-top: 0 !important;
+  }
+}
+
+.hero-text h1{
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+
+}
+
+.about-content .text-side h3{
+  margin-bottom: 20px;
 }
