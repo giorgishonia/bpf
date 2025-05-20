@@ -8,7 +8,7 @@
         
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/feedback.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500&display=swap" rel="stylesheet">
 
@@ -16,7 +16,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body class="dark">
-    <!-- Main Navigation -->
+    <!-- Navigation Bar -->
     <nav>
         <h3 class="logo">Begi.dev</h3>
         <div class="profile-container">
@@ -24,8 +24,8 @@
         </div>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/past-works.html">Projects</a></li>
-            <li><a href="/feedback.html">Feedback</a></li>
+            <li><a href="/past-works.html">Portfolio</a></li>
+            <li><a href="/feedback.html" class="active">Feedback</a></li>
             <li><a href="/#store" class="store-link"><span class="store-text">Store</span><span class="coming-soon-text">Coming Soon</span></a></li>
             <li><a href="/tos.html">ToS</a></li>
             <li>
@@ -36,19 +36,17 @@
                 </svg>
             </li>
             <li>    
-                <div class="theme-toggle">
-                    <div class="switch">
-                        <input type="checkbox" class="switch__input" id="themeSwitch">
-                        <label class="switch__label" for="themeSwitch">
-                            <span class="switch__indicator"></span>
-                            <span class="switch__decoration"></span>
-                        </label>
-                    </div>
+                <div class="switch">
+                    <input type="checkbox" class="switch__input" id="themeSwitch">
+                    <label class="switch__label" for="themeSwitch">
+                        <span class="switch__indicator"></span>
+                        <span class="switch__decoration"></span>
+                    </label>
                 </div>
             </li>
         </ul>
     </nav>
-    
+
     <!-- Mobile Navigation -->
     <div id="mobileNav" class="mobile-nav closed-menu">
         <span>
@@ -59,7 +57,7 @@
         </span>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/past-works.html">Projects</a></li>
+            <li><a href="/past-works.html">Portfolio</a></li>
             <li><a href="/feedback.html">Feedback</a></li>
             <li><a href="/#store">Store</a></li>
             <li><a href="/tos.html">ToS</a></li>

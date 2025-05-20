@@ -68,31 +68,54 @@ async function loadRandomReviews() {
 
 
 // Mobile menu toggle
-document.querySelector('.mobile-menu')?.addEventListener('click', () => {
-    const mobileNav = document.querySelector('.mobile-nav');
-    if (mobileNav) {
-        mobileNav.classList.remove('closed-menu');
-        mobileNav.classList.add('open-menu');
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu setup
+    const mobileMenuBtn = document.querySelector('.mobile-menu');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileCloseBtn = document.querySelector('#mobileNav span');
+    
+    if (mobileMenuBtn && mobileNav) {
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileNav.classList.remove('closed-menu');
+        });
     }
-});
-
-document.querySelector('.tabler-icon')?.addEventListener('click', () => {
-    const mobileNav = document.querySelector('.mobile-nav');
-    if (mobileNav) {
-        mobileNav.classList.remove('open-menu');
-        mobileNav.classList.add('closed-menu');
-    }
-});
-
-// Add event listeners to all mobile nav links
-document.querySelectorAll('.mobile-nav ul a').forEach(link => {
-    link.addEventListener('click', () => {
-        const mobileNav = document.querySelector('.mobile-nav');
-        if (mobileNav) {
-            mobileNav.classList.remove('open-menu');
+    
+    if (mobileCloseBtn && mobileNav) {
+        mobileCloseBtn.addEventListener('click', function() {
             mobileNav.classList.add('closed-menu');
-        }
+        });
+    }
+    
+    // Add event listeners to all mobile nav links
+    document.querySelectorAll('.mobile-nav ul a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (mobileNav) {
+                mobileNav.classList.add('closed-menu');
+            }
+        });
     });
+    
+    // Setup theme toggle
+    const themeSwitch = document.getElementById('themeSwitch');
+    if (themeSwitch) {
+        themeSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                // If the switch is ON (which means it's light mode)
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                // If the switch is OFF (which means it's dark mode)
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    }
+    
+    // Initialize the theme when DOM is loaded
+    initTheme();
+    
+    // Load random reviews
+    loadRandomReviews();
 });
 
 // Uncheck all checkboxes on load
@@ -197,65 +220,68 @@ document.getElementById('themeSwitch')?.addEventListener('change', function() {
     updateLanyardImage(isDark);
     
     // Set new interval with much lower frequency
-    lanyardIntervalId = setInterval(() => updateLanyardImage(isDark), LANYARD_UPDATE_INTERVAL);
+    lanyardIntervalId = setInterval(() => {
+        updateLanyardImage(isDark);
+    }, LANYARD_UPDATE_INTERVAL);
 });
 
 // Initialize theme based on saved preference
 function initTheme() {
     const savedTheme = localStorage.getItem('theme');
     const themeSwitch = document.getElementById('themeSwitch');
-    const isDark = savedTheme === 'dark';
     
-    if (isDark) {
+    if (savedTheme === 'dark') {
         document.body.classList.add('dark');
-        if (themeSwitch) themeSwitch.checked = false; // Dark mode = switch OFF
+        if (themeSwitch) themeSwitch.checked = false; // Switch should be OFF if dark mode is applied
     } else {
         document.body.classList.remove('dark');
-        if (themeSwitch) themeSwitch.checked = true; // Light mode = switch ON
+        if (themeSwitch) themeSwitch.checked = true; // Switch should be ON if light mode is applied
     }
-    
-    // Initialize Lanyard image with rate limiting
-    updateLanyardImage(isDark);
-    
-    // Clear any existing interval and set a new one with proper rate limiting
-    if (lanyardIntervalId) {
-        clearInterval(lanyardIntervalId);
-    }
-    lanyardIntervalId = setInterval(() => updateLanyardImage(isDark), LANYARD_UPDATE_INTERVAL);
 }
 
+// Call initTheme immediately to ensure theme is correctly set before DOM is loaded
 initTheme();
 
 async function loadDiscordWidget() {
-    const serverId = "1258870317758283897"; // Your Discord server ID
-    const apiUrl = `https://discord.com/api/guilds/${serverId}/widget.json`;
-  
     try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error("Failed to fetch server data");
-      
-      const data = await response.json();
-  
-      // Set server details
-      document.getElementById("server-icon").src = data.icon_url || "./public/images/begis-basement.webp";
-      document.getElementById("server-name").textContent = data.name;
-      document.getElementById("member-count").textContent = `Online Members: ${data.presence_count}`;
-      document.getElementById("join-link").href = data.instant_invite || "#";
-  
-      // Display online members
-      const membersList = document.getElementById("online-members");
-      membersList.innerHTML = ""; // Clear existing list
-      data.members.forEach(member => {
-        const listItem = document.createElement("li");
-        listItem.textContent = member.username;
-        membersList.appendChild(listItem);
-      });
-  
+        // Get server ID and token from environment variables or hardcode them (for demo)
+        const serverId = '1124743907486687346';
+        
+        // Fetch server information using Discord API
+        const response = await fetch(`https://discord.com/api/guilds/${serverId}/widget.json`);
+        
+        if (!response.ok) {
+            console.error('Failed to fetch Discord widget data:', response.statusText);
+            return;
+        }
+        
+        const data = await response.json();
+        
+        // Update server details
+        document.getElementById('server-name').textContent = data.name;
+        document.getElementById('member-count').textContent = `${data.presence_count} members online`;
+        document.getElementById('join-link').href = data.instant_invite;
+        
+        // Populate online members (limit to 5)
+        const onlineMembers = document.getElementById('online-members');
+        onlineMembers.innerHTML = '';
+        
+        const visibleMembers = data.members.slice(0, 5);
+        
+        visibleMembers.forEach(member => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <img src="${member.avatar_url}" alt="${member.username}">
+                <span>${member.username}</span>
+            `;
+            onlineMembers.appendChild(li);
+        });
+        
     } catch (error) {
-      console.error("Error loading Discord widget:", error);
+        console.error('Error loading Discord widget:', error);
     }
-  }
-  
-  // Load the widget on page load
-  document.addEventListener("DOMContentLoaded", loadDiscordWidget);
+}
+
+// Load Discord widget data when DOM is loaded
+document.addEventListener('DOMContentLoaded', loadDiscordWidget);
   

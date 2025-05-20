@@ -177,33 +177,42 @@ function populateCarousel() {
                     <div class="game-stats">
                     <div>${visitData?.visits?.toLocaleString() || '0'}</div>
                     <div>${voteData?.upVotes?.toLocaleString() || '0'}</div>
-                </div>
+                    </div>
                 </div>
             `;
             carousel.appendChild(card);
     });
-
-    // Create pagination dots for each card
-    const paginationContainer = document.querySelector('.carousel-pagination');
-    paginationContainer.innerHTML = '';
     
     maxIndex = gameData.details.length - 1;
     
-    // Create a dot for each project
-    for (let i = 0; i <= maxIndex; i++) {
-        const dot = document.createElement('div');
-        dot.className = i === 0 ? 'pagination-dot active' : 'pagination-dot';
-        dot.setAttribute('data-index', i);
-        dot.addEventListener('click', () => {
-            scrollToCard(i);
+    // Setup arrow navigation
+    const prevArrow = document.querySelector('.carousel-prev');
+    const nextArrow = document.querySelector('.carousel-next');
+    
+    if (prevArrow) {
+        prevArrow.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                scrollToCard(currentIndex - 1);
+            } else {
+                // Loop to the end if at the beginning
+                scrollToCard(maxIndex);
+            }
         });
-        
-        paginationContainer.appendChild(dot);
+    }
+    
+    if (nextArrow) {
+        nextArrow.addEventListener('click', () => {
+            if (currentIndex < maxIndex) {
+                scrollToCard(currentIndex + 1);
+            } else {
+                // Loop to the start if at the end
+                scrollToCard(0);
+            }
+        });
     }
     
     // Initialize at the first card
     currentIndex = 0;
-    updateActiveDot();
 }
 
 // Scroll to a specific card by index
@@ -223,21 +232,12 @@ function scrollToCard(index) {
         behavior: 'smooth'
     });
     
-    // Update current index and active dot
+    // Update current index
     currentIndex = index;
-    updateActiveDot();
     
     // Pause auto-scroll temporarily
     isAutoScrollPaused = true;
     setTimeout(() => { isAutoScrollPaused = false; }, 3000);
-}
-
-// Update the active pagination dot
-function updateActiveDot() {
-    const dots = document.querySelectorAll('.pagination-dot');
-    dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentIndex);
-    });
 }
 
 // Calculate total width of a card including margin/gap
@@ -266,34 +266,13 @@ function startCarouselAutoScroll() {
     
     autoScrollInterval = setInterval(() => {
         if (!isAutoScrollPaused) {
-            const currentPosition = carousel.scrollLeft;
-            const cardWidth = carousel.querySelector('.game-card').offsetWidth;
-            const margin = parseInt(window.getComputedStyle(carousel.querySelector('.game-card')).marginRight);
-            const scrollDistance = cardWidth + margin;
-            
-            if (isScrollingLeft) {
-                carousel.scrollTo({
-                    left: currentPosition - scrollDistance,
-                    behavior: 'smooth'
-                });
-                
-                // If we've scrolled to the beginning, change direction
-                if (currentPosition <= scrollDistance) {
-                    isScrollingLeft = false;
-                }
+            // Navigate to the next card
+            if (currentIndex < maxIndex) {
+                scrollToCard(currentIndex + 1);
             } else {
-                carousel.scrollTo({
-                    left: currentPosition + scrollDistance,
-                    behavior: 'smooth'
-                });
-                
-                // If we've scrolled to the end, change direction
-                if (currentPosition >= carousel.scrollWidth - carousel.clientWidth - scrollDistance) {
-                    isScrollingLeft = true;
-                }
+                // Loop back to the first card
+                scrollToCard(0);
             }
-            
-            updateActiveDot();
         }
     }, 1500); // Changed from 5000 to 1500 for auto-scroll every 1.5 seconds
     
@@ -321,7 +300,7 @@ function startCarouselAutoScroll() {
     carousel.addEventListener('scroll', handleScrollEvent);
 }
 
-// Track scroll position and update active dot
+// Track scroll position and update current index
 function handleScrollEvent() {
     const carousel = document.getElementById('gameCarousel');
     if (!carousel) return;
@@ -338,7 +317,6 @@ function handleScrollEvent() {
         // Only update if changed
         if (newIndex !== currentIndex && newIndex >= 0 && newIndex <= maxIndex) {
             currentIndex = newIndex;
-            updateActiveDot();
         }
     }, 100);
 }
@@ -452,10 +430,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'ArrowLeft') {
             if (currentIndex > 0) {
                 scrollToCard(currentIndex - 1);
+            } else {
+                // Loop to the end if at the beginning
+                scrollToCard(maxIndex);
             }
         } else if (e.key === 'ArrowRight') {
             if (currentIndex < maxIndex) {
                 scrollToCard(currentIndex + 1);
+            } else {
+                // Loop to the start if at the end
+                scrollToCard(0);
             }
         }
     });

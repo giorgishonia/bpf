@@ -525,18 +525,20 @@ document.addEventListener('DOMContentLoaded', function() {
 function initTheme() {
     // Check for saved theme preference
     const savedTheme = localStorage.getItem('theme');
+    const themeSwitch = document.getElementById('themeSwitch');
     
     if (savedTheme === 'dark') {
-        document.body.classList.add('dark'); // Add dark class for main site compatibility
-        themeSwitch.checked = false;  // Switch should be OFF if dark mode is applied
+        document.body.classList.add('dark');
+        if (themeSwitch) themeSwitch.checked = false; // Switch should be OFF if dark mode is applied
     } else {
-        document.body.classList.remove('dark'); // Remove dark class
-        themeSwitch.checked = true;  // Switch should be ON if light mode is applied
+        document.body.classList.remove('dark');
+        if (themeSwitch) themeSwitch.checked = true; // Switch should be ON if light mode is applied
     }
 }
 
 // Theme toggle function with correct logic
 function toggleTheme() {
+    const themeSwitch = document.getElementById('themeSwitch');
     if (themeSwitch.checked) {
         // If the switch is ON (which means it's light mode)
         document.body.classList.remove('dark');

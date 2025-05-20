@@ -556,10 +556,15 @@ nav {
     left: 0;
     z-index: 100;
     background-color: var(--bg-color);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.09);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+nav.scrolled {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+    background-color: rgba(var(--bg-color-rgb, 248, 249, 250), 0.95);
 }
 
 nav ul {
@@ -593,7 +598,7 @@ nav ul li a::after {
     bottom: 0;
     left: 0;
     background-color: #5865F2;
-    transition: var(--transition-standard, 0.3s ease);
+    transition: 0.3s ease;
 }
 
 nav ul li a:hover::after,
@@ -601,7 +606,8 @@ nav ul li a.active::after {
     width: 100%;
 }
 
-nav ul li a:hover {
+nav ul li a:hover,
+nav ul li a.active {
     color: #5865F2;
 }
 
@@ -625,6 +631,11 @@ nav ul li a:hover {
     font-weight: 700;
     font-size: 1.5rem;
     cursor: pointer;
+    background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
 }
 
 .mobile-nav {
@@ -674,7 +685,7 @@ nav ul li a:hover {
     width: 0;
     height: 2px;
     background-color: #5865F2;
-    transition: var(--transition-standard, 0.3s ease);
+    transition: 0.3s ease;
 }
 
 .mobile-nav ul li a:hover::after {

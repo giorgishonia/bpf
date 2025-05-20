@@ -285,10 +285,6 @@ body.dark nav{
   
   }
 
-  body.dark .logo{
-    filter: invert(1);
-  }
-
   body.dark ul li a{
     color: white;
   }
@@ -1882,4 +1878,8 @@ body.dark .join-button:hover{
 
 .contact__title h3{
   color: rgb(0, 179, 255);
+}
+
+.logo{
+  font-size: 2.5rem !important;
 }

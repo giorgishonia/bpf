@@ -10,7 +10,7 @@
     <title>Terms of Service</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
    /* Variables for light/dark theme */
 :root {
@@ -27,6 +27,15 @@
     --section-number-text: #5865F2;
     --point-number-bg: rgba(88, 101, 242, 0.06);
     --point-number-text: #5865F2;
+    --primary-color: #5865F2;
+    --primary-gradient: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
+    --primary-hover: #4752c4;
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.15);
+    --transition-standard: 0.3s ease;
+    --header-height: 80px;
 }
 
 /* Dark theme variables */
@@ -45,175 +54,218 @@
     --point-number-text: #7d88f3;
 }
 
-/* Main navigation styles */
+/* Main Navigation Styles */
 nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 80px;
-    width: 100%;
-    padding: 25px 40px 25px 50px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 200;
-    background-color: var(--bg-color);
-    box-shadow: 0 0 10px var(--shadow-color);
-    transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-height);
+  width: 100%;
+  padding: 0 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: var(--bg-color);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+nav.scrolled {
+  box-shadow: var(--shadow-md);
+  background-color: rgba(var(--bg-color-rgb, 248, 249, 250), 0.95);
 }
 
 nav ul {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-    align-items: center;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 nav ul li {
-    margin: 0;
+  margin: 0;
+  position: relative;
 }
 
 nav ul li a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.23s;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 5px 0;
 }
 
-nav ul li a:hover {
-    color: #5865F2;
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: var(--transition-standard);
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+  width: 100%;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: var(--primary-color);
+}
+
+/* Hide hamburger menu on desktop */
+.mobile-menu {
+  display: none;
+}
+
+/* Show hamburger menu only on mobile */
+@media (max-width: 1000px) {
+  .mobile-menu {
+    display: block;
+    cursor: pointer;
+  }
 }
 
 .logo {
-    color: var(--text-color);
-    font-weight: 700;
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin: 0;
-}
-
-.mobile-menu {
-    display: none;
-    cursor: pointer;
-    color: var(--text-color);
-    font-size: 2.3rem;
-}
-
-.mobile-menu svg {
-    display: block;
-    width: 30px;
-    height: 30px;
-}
-
-.mobile-menu:hover {
-    color: #147efb;
-    transition: all .3s;
-}
-
-.mobile-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--bg-color);
-    z-index: 300;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease-in-out;
-}
-
-.mobile-nav span {
-    position: absolute;
-    top: 2rem;
-    right: 4rem;
-    font-size: 3.3rem;
-    cursor: pointer;
-    color: var(--text-color);
-}
-
-.mobile-nav span svg {
-    color: var(--text-color);
-    stroke: currentColor;
-    transition: all 0.2s ease;
-}
-
-.mobile-nav span svg:hover {
-    transform: rotate(90deg);
-    color: #147efb;
-}
-
-.mobile-nav ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4rem;
-    list-style: none;
-    font-size: 2.3rem;
-}
-
-.mobile-nav ul li a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.5rem;
-    transition: all 0.23s;
-}
-
-.mobile-nav ul li a:hover {
-    color: #5865F2;
-}
-
-.closed-menu {
-    left: -100% !important;
-}
-
-.open-menu {
-    left: 0 !important;
+  color: var(--text-color);
+  font-weight: 800;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin: 0;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 .profile-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
 }
 
 .store-link {
-    position: relative;
+  position: relative;
 }
 
 .store-text {
-    position: relative;
+  position: relative;
 }
 
 .coming-soon-text {
-    position: absolute;
-    top: -10px;
-    right: -40px;
-    background-color: #5865F2;
-    color: white;
-    font-size: 0.6rem;
-    padding: 2px 6px;
-    border-radius: 4px;
-    white-space: nowrap;
+  position: absolute;
+  top: -10px;
+  right: -40px;
+  background-color: #5865F2;
+  color: white;
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
 }
 
-/* Theme switch styles */
+/* Mobile Nav */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  z-index: 999;
+  padding: 2rem;
+  transition: all 0.3s cubic-bezier(0.3, 0, 0.3, 1);
+}
+
+.mobile-nav span {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.mobile-nav ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  margin-top: 3rem;
+}
+
+.mobile-nav ul li a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.5rem;
+  transition: all 0.23s;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.mobile-nav ul li a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: var(--transition-standard);
+}
+
+.mobile-nav ul li a:hover::after {
+  width: 100%;
+}
+
+.mobile-nav ul li a:hover {
+  color: var(--primary-color);
+}
+
+.closed-menu {
+  transform: translateY(-100%);
+}
+
+/* Responsive styles for the navbar */
+@media (max-width: 1000px) {
+  nav ul li:not(:nth-last-child(1), :nth-last-child(2)) {
+    display: none;
+  }
+  
+  .mobile-menu {
+    display: block;
+  }
+}
+
+@media (max-width: 400px) {
+  nav {
+    padding: 0 20px;
+  }
+}
+
+/* Theme Switch Styles */
 .switch {
     display: inline-block;
     position: relative;
+    z-index: 2;
 }
 
 .switch__input {
@@ -380,27 +432,6 @@ nav ul li a:hover {
     }
     100% {
         transform: translate(0%, -50%);
-    }
-}
-
-/* Responsive styles for the navbar */
-@media (max-width: 1000px) {
-    nav {
-        padding: 25px 20px;
-    }
-    
-    nav ul li:not(:nth-last-child(1), :nth-last-child(2)) {
-        display: none;
-    }
-    
-    .mobile-menu {
-        display: block;
-    }
-}
-
-@media (max-width: 400px) {
-    nav {
-        padding: 25px 30px;
     }
 }
 
@@ -591,7 +622,7 @@ a:hover {
     </style>
 </head>
 <body class="dark">
-    <!-- Main Navigation -->
+    <!-- Navigation Bar -->
     <nav>
         <h3 class="logo">Begi.dev</h3>
         <div class="profile-container">
@@ -599,10 +630,10 @@ a:hover {
         </div>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/past-works.html">Projects</a></li>
+            <li><a href="/past-works.html">Portfolio</a></li>
             <li><a href="/feedback.html">Feedback</a></li>
             <li><a href="/#store" class="store-link"><span class="store-text">Store</span><span class="coming-soon-text">Coming Soon</span></a></li>
-            <li><a href="/tos.html">ToS</a></li>
+            <li><a href="/tos.html" class="active">ToS</a></li>
             <li>
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mobile-menu">
                     <path d="M4 6l16 0"></path>
@@ -632,7 +663,7 @@ a:hover {
         </span>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/past-works.html">Projects</a></li>
+            <li><a href="/past-works.html">Portfolio</a></li>
             <li><a href="/feedback.html">Feedback</a></li>
             <li><a href="/#store">Store</a></li>
             <li><a href="/tos.html">ToS</a></li>
@@ -693,20 +724,20 @@ a:hover {
             if (mobileMenuBtn) {
                 mobileMenuBtn.addEventListener('click', () => {
                     mobileNav.classList.remove('closed-menu');
-                    mobileNav.classList.add('open-menu');
                 });
             }
             
             if (mobileCloseBtn) {
                 mobileCloseBtn.addEventListener('click', () => {
-                    mobileNav.classList.remove('open-menu');
                     mobileNav.classList.add('closed-menu');
                 });
             }
             
             // Theme toggle
             const themeSwitch = document.getElementById('themeSwitch');
-            themeSwitch.addEventListener('change', toggleTheme);
+            if (themeSwitch) {
+                themeSwitch.addEventListener('change', toggleTheme);
+            }
             
             // Initialize theme
             initTheme();
@@ -716,12 +747,10 @@ a:hover {
             const themeSwitch = document.getElementById('themeSwitch');
             if (themeSwitch.checked) {
                 // If the switch is ON (which means it's light mode)
-                document.body.classList.remove('dark-mode');
                 document.body.classList.remove('dark');
                 localStorage.setItem('theme', 'light');
             } else {
                 // If the switch is OFF (which means it's dark mode)
-                document.body.classList.add('dark-mode');
                 document.body.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
             }
@@ -733,12 +762,10 @@ a:hover {
             const themeSwitch = document.getElementById('themeSwitch');
             
             if (savedTheme === 'dark') {
-                document.body.classList.add('dark-mode'); // Apply dark mode to body
-                document.body.classList.add('dark'); // Also add 'dark' class for main site compatibility
+                document.body.classList.add('dark'); // Apply dark mode to body
                 themeSwitch.checked = false;  // Switch should be OFF if dark mode is applied
             } else {
-                document.body.classList.remove('dark-mode'); // Remove dark mode
-                document.body.classList.remove('dark'); // Also remove 'dark' class
+                document.body.classList.remove('dark'); // Remove dark mode
                 themeSwitch.checked = true;  // Switch should be ON if light mode is applied
             }
         }
